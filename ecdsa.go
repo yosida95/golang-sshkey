@@ -20,7 +20,7 @@ func (k *ECDSAPublicKey) GetPublic() crypto.PublicKey {
 	return k.pub
 }
 
-func UnmarshalOpenSSHECDSAPublicKey(c []byte, comment string) (*ECDSAPublicKey, error) {
+func unmarshalOpenSSHECDSAPublicKey(c []byte, comment string) (*ECDSAPublicKey, error) {
 	var alg, cName, data []byte
 
 	alg, c = decodeByteSlice(c)

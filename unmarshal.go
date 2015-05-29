@@ -48,11 +48,11 @@ func UnmarshalOpenSSHPublicKey(pub string) (PublicKey, error) {
 
 	switch alg {
 	case "ssh-rsa":
-		return UnmarshalOpenSSHRSAPublicKey(c, comment)
+		return unmarshalOpenSSHRSAPublicKey(c, comment)
 	case "ssh-dss":
-		return UnmarshalOpenSSHDSAPublicKey(c, comment)
+		return unmarshalOpenSSHDSAPublicKey(c, comment)
 	case "ecdsa-sha2-nistp256", "ecdsa-sha2-nistp384", "ecdsa-sha2-nistp521":
-		return UnmarshalOpenSSHECDSAPublicKey(c, comment)
+		return unmarshalOpenSSHECDSAPublicKey(c, comment)
 	}
 	return nil, ErrUnsupportedKey
 }

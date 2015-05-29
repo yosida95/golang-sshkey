@@ -19,7 +19,7 @@ func (r *DSAPublicKey) GetPublic() crypto.PublicKey {
 	return r.pub
 }
 
-func UnmarshalOpenSSHDSAPublicKey(c []byte, comment string) (*DSAPublicKey, error) {
+func unmarshalOpenSSHDSAPublicKey(c []byte, comment string) (*DSAPublicKey, error) {
 	var p, q, g, y []byte
 
 	alg, c := decodeByteSlice(c)
