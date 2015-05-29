@@ -20,6 +20,37 @@ func (k *ECDSAPublicKey) GetPublic() crypto.PublicKey {
 	return k.pub
 }
 
+func marshalOpenSSHECDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
+	key, ok := k.GetPublic().(*ecdsa.PublicKey)
+	if !ok {
+		err = ErrUnsupportedKey
+		return
+	}
+
+	var cName string
+	switch key.Curve.Params().BitSize {
+	case 256:
+		cName = "nistp256"
+	case 384:
+		cName = "nistp384"
+	case 521:
+		cName = "nistp521"
+	default:
+		err = ErrUnsupportedKey
+		return
+	}
+
+	prefix = "ecdsa-sha2-" + cName
+
+	buf := bytes.NewBuffer(nil)
+	buf.Write(encodeByteSlice([]byte(prefix)))
+	buf.Write(encodeByteSlice([]byte(cName)))
+	buf.Write(encodeByteSlice(elliptic.Marshal(key.Curve, key.X, key.Y)))
+	content = buf.Bytes()
+
+	return
+}
+
 func unmarshalOpenSSHECDSAPublicKey(c []byte, comment string) (*ECDSAPublicKey, error) {
 	var alg, cName, data []byte
 

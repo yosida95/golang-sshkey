@@ -1,6 +1,7 @@
 package sshkey
 
 import (
+	"bytes"
 	"crypto"
 	"crypto/dsa"
 	"math/big"
@@ -17,6 +18,26 @@ func (r *DSAPublicKey) GetLength() int {
 
 func (r *DSAPublicKey) GetPublic() crypto.PublicKey {
 	return r.pub
+}
+
+func marshalOpenSSHDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
+	key, ok := k.GetPublic().(*dsa.PublicKey)
+	if !ok {
+		err = ErrUnsupportedKey
+		return
+	}
+
+	prefix = "ssh-dss"
+
+	buf := bytes.NewBuffer(nil)
+	buf.Write(encodeByteSlice([]byte(prefix)))
+	buf.Write(encodeByteSlice([]byte{0}, key.Parameters.P.Bytes()))
+	buf.Write(encodeByteSlice([]byte{0}, key.Parameters.Q.Bytes()))
+	buf.Write(encodeByteSlice(key.Parameters.G.Bytes()))
+	buf.Write(encodeByteSlice(key.Y.Bytes()))
+	content = buf.Bytes()
+
+	return
 }
 
 func unmarshalOpenSSHDSAPublicKey(c []byte, comment string) (*DSAPublicKey, error) {

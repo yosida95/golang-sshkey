@@ -1,6 +1,7 @@
 package sshkey
 
 import (
+	"bytes"
 	"crypto"
 	"crypto/rsa"
 	"encoding/binary"
@@ -18,6 +19,28 @@ func (r *RSAPublicKey) GetLength() int {
 
 func (r *RSAPublicKey) GetPublic() crypto.PublicKey {
 	return r.pub
+}
+
+func marshalOpenSSHRSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
+	key, ok := k.GetPublic().(*rsa.PublicKey)
+	if !ok {
+		err = ErrUnsupportedKey
+		return
+	}
+
+	prefix = "ssh-rsa"
+
+	buf := bytes.NewBuffer(nil)
+	buf.Write(encodeByteSlice([]byte(prefix)))
+
+	e := make([]byte, 4)
+	binary.BigEndian.PutUint32(e, uint32(key.E))
+	buf.Write(encodeByteSlice(bytes.TrimLeft(e, "\x00")))
+
+	buf.Write(encodeByteSlice([]byte{0}, key.N.Bytes()))
+	content = buf.Bytes()
+
+	return
 }
 
 func unmarshalOpenSSHRSAPublicKey(c []byte, comment string) (*RSAPublicKey, error) {
