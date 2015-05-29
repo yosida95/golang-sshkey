@@ -7,16 +7,16 @@ import (
 	"crypto/elliptic"
 )
 
-type ECDSAPublicKey struct {
+type ecdsaPublicKey struct {
 	pub *ecdsa.PublicKey
 	basePublicKey
 }
 
-func (k *ECDSAPublicKey) GetLength() int {
+func (k *ecdsaPublicKey) GetLength() int {
 	return k.pub.Curve.Params().BitSize
 }
 
-func (k *ECDSAPublicKey) GetPublic() crypto.PublicKey {
+func (k *ecdsaPublicKey) GetPublic() crypto.PublicKey {
 	return k.pub
 }
 
@@ -51,7 +51,7 @@ func marshalOpenSSHECDSAPublicKey(k PublicKey) (prefix string, content []byte, e
 	return
 }
 
-func unmarshalOpenSSHECDSAPublicKey(c []byte, comment string) (*ECDSAPublicKey, error) {
+func unmarshalOpenSSHECDSAPublicKey(c []byte, comment string) (*ecdsaPublicKey, error) {
 	var alg, cName, data []byte
 
 	alg, c = decodeByteSlice(c)
@@ -89,7 +89,7 @@ func unmarshalOpenSSHECDSAPublicKey(c []byte, comment string) (*ECDSAPublicKey, 
 		return nil, ErrUnsupportedKey
 	}
 
-	key := &ECDSAPublicKey{
+	key := &ecdsaPublicKey{
 		pub: pub,
 		basePublicKey: basePublicKey{
 			keyType: KEY_ECDSA,

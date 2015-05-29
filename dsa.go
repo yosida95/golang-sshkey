@@ -7,16 +7,16 @@ import (
 	"math/big"
 )
 
-type DSAPublicKey struct {
+type dsaPublicKey struct {
 	pub *dsa.PublicKey
 	basePublicKey
 }
 
-func (r *DSAPublicKey) GetLength() int {
+func (r *dsaPublicKey) GetLength() int {
 	return r.pub.P.BitLen()
 }
 
-func (r *DSAPublicKey) GetPublic() crypto.PublicKey {
+func (r *dsaPublicKey) GetPublic() crypto.PublicKey {
 	return r.pub
 }
 
@@ -40,7 +40,7 @@ func marshalOpenSSHDSAPublicKey(k PublicKey) (prefix string, content []byte, err
 	return
 }
 
-func unmarshalOpenSSHDSAPublicKey(c []byte, comment string) (*DSAPublicKey, error) {
+func unmarshalOpenSSHDSAPublicKey(c []byte, comment string) (*dsaPublicKey, error) {
 	var p, q, g, y []byte
 
 	alg, c := decodeByteSlice(c)
@@ -68,7 +68,7 @@ func unmarshalOpenSSHDSAPublicKey(c []byte, comment string) (*DSAPublicKey, erro
 		return nil, ErrMalformedKey
 	}
 
-	key := &DSAPublicKey{
+	key := &dsaPublicKey{
 		pub: &dsa.PublicKey{
 			Parameters: dsa.Parameters{
 				P: new(big.Int).SetBytes(p),

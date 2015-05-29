@@ -8,16 +8,16 @@ import (
 	"math/big"
 )
 
-type RSAPublicKey struct {
+type rsaPublicKey struct {
 	pub *rsa.PublicKey
 	basePublicKey
 }
 
-func (r *RSAPublicKey) GetLength() int {
+func (r *rsaPublicKey) GetLength() int {
 	return r.pub.N.BitLen()
 }
 
-func (r *RSAPublicKey) GetPublic() crypto.PublicKey {
+func (r *rsaPublicKey) GetPublic() crypto.PublicKey {
 	return r.pub
 }
 
@@ -43,7 +43,7 @@ func marshalOpenSSHRSAPublicKey(k PublicKey) (prefix string, content []byte, err
 	return
 }
 
-func unmarshalOpenSSHRSAPublicKey(c []byte, comment string) (*RSAPublicKey, error) {
+func unmarshalOpenSSHRSAPublicKey(c []byte, comment string) (*rsaPublicKey, error) {
 	var alg, exp, mod []byte
 
 	alg, c = decodeByteSlice(c)
@@ -66,7 +66,7 @@ func unmarshalOpenSSHRSAPublicKey(c []byte, comment string) (*RSAPublicKey, erro
 		return nil, ErrMalformedKey
 	}
 
-	key := &RSAPublicKey{
+	key := &rsaPublicKey{
 		pub: &rsa.PublicKey{
 			E: int(binary.BigEndian.Uint32(exp)),
 			N: new(big.Int).SetBytes(mod),
