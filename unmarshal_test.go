@@ -147,6 +147,5 @@ func TestUnmarshalOpenSSHPublicKey(t *testing.T) {
 		if pub.GetComment() != c.comment {
 			t.Fail()
 		}
-
 	}
 }
