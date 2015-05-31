@@ -14,7 +14,7 @@ func Fingerprint(k PublicKey, alg crypto.Hash) ([]byte, error) {
 		c   []byte
 		err error
 	)
-	switch k.GetType() {
+	switch k.Type() {
 	case KEY_RSA:
 		_, c, err = marshalRSAPublicKey(k)
 	case KEY_DSA:

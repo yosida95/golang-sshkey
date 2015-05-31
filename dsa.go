@@ -12,16 +12,16 @@ type dsaPublicKey struct {
 	basePublicKey
 }
 
-func (r *dsaPublicKey) GetLength() int {
+func (r *dsaPublicKey) Length() int {
 	return r.pub.P.BitLen()
 }
 
-func (r *dsaPublicKey) GetPublic() crypto.PublicKey {
+func (r *dsaPublicKey) Public() crypto.PublicKey {
 	return r.pub
 }
 
 func marshalDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
-	key, ok := k.GetPublic().(*dsa.PublicKey)
+	key, ok := k.Public().(*dsa.PublicKey)
 	if !ok {
 		err = ErrUnsupportedKey
 		return

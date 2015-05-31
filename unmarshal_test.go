@@ -135,16 +135,16 @@ func TestUnmarshalPublicKey(t *testing.T) {
 			continue
 		}
 
-		if pub.GetType() != c.keyType {
+		if pub.Type() != c.keyType {
 			t.Fail()
 		}
-		if !reflect.DeepEqual(pub.GetPublic(), c.public) {
+		if !reflect.DeepEqual(pub.Public(), c.public) {
 			t.Fail()
 		}
-		if pub.GetLength() != c.length {
+		if pub.Length() != c.length {
 			t.Fail()
 		}
-		if pub.GetComment() != c.comment {
+		if pub.Comment() != c.comment {
 			t.Fail()
 		}
 	}

@@ -13,10 +13,10 @@ const (
 )
 
 type PublicKey interface {
-	GetType() Type
-	GetPublic() crypto.PublicKey
-	GetLength() int
-	GetComment() string
+	Type() Type
+	Public() crypto.PublicKey
+	Length() int
+	Comment() string
 }
 
 type basePublicKey struct {
@@ -24,10 +24,10 @@ type basePublicKey struct {
 	comment string
 }
 
-func (k *basePublicKey) GetType() Type {
+func (k *basePublicKey) Type() Type {
 	return k.keyType
 }
 
-func (k *basePublicKey) GetComment() string {
+func (k *basePublicKey) Comment() string {
 	return k.comment
 }

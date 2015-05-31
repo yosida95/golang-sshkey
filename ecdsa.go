@@ -12,16 +12,16 @@ type ecdsaPublicKey struct {
 	basePublicKey
 }
 
-func (k *ecdsaPublicKey) GetLength() int {
+func (k *ecdsaPublicKey) Length() int {
 	return k.pub.Curve.Params().BitSize
 }
 
-func (k *ecdsaPublicKey) GetPublic() crypto.PublicKey {
+func (k *ecdsaPublicKey) Public() crypto.PublicKey {
 	return k.pub
 }
 
 func marshalECDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
-	key, ok := k.GetPublic().(*ecdsa.PublicKey)
+	key, ok := k.Public().(*ecdsa.PublicKey)
 	if !ok {
 		err = ErrUnsupportedKey
 		return

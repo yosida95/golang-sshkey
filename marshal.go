@@ -31,7 +31,7 @@ func encodeByteSlice(in ...[]byte) []byte {
 func MarshalPublicKey(key PublicKey) (result string, err error) {
 	var content []byte
 
-	switch key.GetType() {
+	switch key.Type() {
 	case KEY_RSA:
 		result, content, err = marshalRSAPublicKey(key)
 	case KEY_DSA:
@@ -43,8 +43,8 @@ func MarshalPublicKey(key PublicKey) (result string, err error) {
 	}
 
 	result += " " + base64.StdEncoding.EncodeToString(content)
-	if key.GetComment() != "" {
-		result += " " + key.GetComment()
+	if key.Comment() != "" {
+		result += " " + key.Comment()
 	}
 
 	return

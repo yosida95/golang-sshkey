@@ -13,16 +13,16 @@ type rsaPublicKey struct {
 	basePublicKey
 }
 
-func (r *rsaPublicKey) GetLength() int {
+func (r *rsaPublicKey) Length() int {
 	return r.pub.N.BitLen()
 }
 
-func (r *rsaPublicKey) GetPublic() crypto.PublicKey {
+func (r *rsaPublicKey) Public() crypto.PublicKey {
 	return r.pub
 }
 
 func marshalRSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
-	key, ok := k.GetPublic().(*rsa.PublicKey)
+	key, ok := k.Public().(*rsa.PublicKey)
 	if !ok {
 		err = ErrUnsupportedKey
 		return
