@@ -26,7 +26,7 @@ func decodeByteSlice(in []byte) ([]byte, []byte) {
 	return in[4:stop], in[stop:l]
 }
 
-func UnmarshalOpenSSHPublicKey(pub string) (PublicKey, error) {
+func UnmarshalPublicKey(pub string) (PublicKey, error) {
 	splited := strings.SplitN(pub, " ", 3)
 	if len(splited) < 2 {
 		return nil, ErrMalformedKey
@@ -48,11 +48,11 @@ func UnmarshalOpenSSHPublicKey(pub string) (PublicKey, error) {
 
 	switch alg {
 	case "ssh-rsa":
-		return unmarshalOpenSSHRSAPublicKey(c, comment)
+		return unmarshalRSAPublicKey(c, comment)
 	case "ssh-dss":
-		return unmarshalOpenSSHDSAPublicKey(c, comment)
+		return unmarshalDSAPublicKey(c, comment)
 	case "ecdsa-sha2-nistp256", "ecdsa-sha2-nistp384", "ecdsa-sha2-nistp521":
-		return unmarshalOpenSSHECDSAPublicKey(c, comment)
+		return unmarshalECDSAPublicKey(c, comment)
 	}
 	return nil, ErrUnsupportedKey
 }

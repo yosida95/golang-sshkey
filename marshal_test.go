@@ -7,27 +7,27 @@ import (
 )
 
 var (
-	marshalOpenSSHPublicKeyCases = []string{
+	marshalPublicKeyCases = []string{
 		"testdata/rsa.pub",
 		"testdata/dsa.pub",
 		"testdata/ecdsa.pub",
 	}
 )
 
-func TestMarshalOpenSSHPublicKey(t *testing.T) {
-	for _, c := range marshalOpenSSHPublicKeyCases {
+func TestMarshalPublicKey(t *testing.T) {
+	for _, c := range marshalPublicKeyCases {
 		keyB, err := ioutil.ReadFile(c)
 		if err != nil {
 			panic(err)
 		}
 		key := strings.TrimSpace(string(keyB))
 
-		pub, err := UnmarshalOpenSSHPublicKey(key)
+		pub, err := UnmarshalPublicKey(key)
 		if err != nil {
 			panic(err)
 		}
 
-		ret, err := MarshalOpenSSHPublicKey(pub)
+		ret, err := MarshalPublicKey(pub)
 		if err != nil {
 			t.Error(err)
 			continue

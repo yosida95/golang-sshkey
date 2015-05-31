@@ -20,7 +20,7 @@ func (r *dsaPublicKey) GetPublic() crypto.PublicKey {
 	return r.pub
 }
 
-func marshalOpenSSHDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
+func marshalDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
 	key, ok := k.GetPublic().(*dsa.PublicKey)
 	if !ok {
 		err = ErrUnsupportedKey
@@ -40,7 +40,7 @@ func marshalOpenSSHDSAPublicKey(k PublicKey) (prefix string, content []byte, err
 	return
 }
 
-func unmarshalOpenSSHDSAPublicKey(c []byte, comment string) (*dsaPublicKey, error) {
+func unmarshalDSAPublicKey(c []byte, comment string) (*dsaPublicKey, error) {
 	var p, q, g, y []byte
 
 	alg, c := decodeByteSlice(c)

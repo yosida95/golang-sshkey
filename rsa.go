@@ -21,7 +21,7 @@ func (r *rsaPublicKey) GetPublic() crypto.PublicKey {
 	return r.pub
 }
 
-func marshalOpenSSHRSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
+func marshalRSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
 	key, ok := k.GetPublic().(*rsa.PublicKey)
 	if !ok {
 		err = ErrUnsupportedKey
@@ -43,7 +43,7 @@ func marshalOpenSSHRSAPublicKey(k PublicKey) (prefix string, content []byte, err
 	return
 }
 
-func unmarshalOpenSSHRSAPublicKey(c []byte, comment string) (*rsaPublicKey, error) {
+func unmarshalRSAPublicKey(c []byte, comment string) (*rsaPublicKey, error) {
 	var alg, exp, mod []byte
 
 	alg, c = decodeByteSlice(c)

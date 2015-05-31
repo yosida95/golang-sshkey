@@ -28,16 +28,16 @@ func encodeByteSlice(in ...[]byte) []byte {
 	return out
 }
 
-func MarshalOpenSSHPublicKey(key PublicKey) (result string, err error) {
+func MarshalPublicKey(key PublicKey) (result string, err error) {
 	var content []byte
 
 	switch key.GetType() {
 	case KEY_RSA:
-		result, content, err = marshalOpenSSHRSAPublicKey(key)
+		result, content, err = marshalRSAPublicKey(key)
 	case KEY_DSA:
-		result, content, err = marshalOpenSSHDSAPublicKey(key)
+		result, content, err = marshalDSAPublicKey(key)
 	case KEY_ECDSA:
-		result, content, err = marshalOpenSSHECDSAPublicKey(key)
+		result, content, err = marshalECDSAPublicKey(key)
 	default:
 		return "", ErrUnsupportedKey
 	}

@@ -20,7 +20,7 @@ func (k *ecdsaPublicKey) GetPublic() crypto.PublicKey {
 	return k.pub
 }
 
-func marshalOpenSSHECDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
+func marshalECDSAPublicKey(k PublicKey) (prefix string, content []byte, err error) {
 	key, ok := k.GetPublic().(*ecdsa.PublicKey)
 	if !ok {
 		err = ErrUnsupportedKey
@@ -51,7 +51,7 @@ func marshalOpenSSHECDSAPublicKey(k PublicKey) (prefix string, content []byte, e
 	return
 }
 
-func unmarshalOpenSSHECDSAPublicKey(c []byte, comment string) (*ecdsaPublicKey, error) {
+func unmarshalECDSAPublicKey(c []byte, comment string) (*ecdsaPublicKey, error) {
 	var alg, cName, data []byte
 
 	alg, c = decodeByteSlice(c)

@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-type unmarshalOpenSSHPublicKeyCase struct {
+type unmarshalPublicKeyCase struct {
 	path string
 
 	keyType Type
@@ -22,7 +22,7 @@ type unmarshalOpenSSHPublicKeyCase struct {
 }
 
 var (
-	unmarshalOpenSSHPublicKeyCases = []unmarshalOpenSSHPublicKeyCase{
+	unmarshalPublicKeyCases = []unmarshalPublicKeyCase{
 		{
 			path:    "testdata/rsa.pub",
 			keyType: KEY_RSA,
@@ -123,13 +123,13 @@ var (
 	}
 )
 
-func TestUnmarshalOpenSSHPublicKey(t *testing.T) {
-	for _, c := range unmarshalOpenSSHPublicKeyCases {
+func TestUnmarshalPublicKey(t *testing.T) {
+	for _, c := range unmarshalPublicKeyCases {
 		key, err := ioutil.ReadFile(c.path)
 		if err != nil {
 			panic(err)
 		}
-		pub, err := UnmarshalOpenSSHPublicKey(string(key))
+		pub, err := UnmarshalPublicKey(string(key))
 		if err != nil {
 			t.Error(err)
 			continue

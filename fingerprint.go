@@ -16,11 +16,11 @@ func Fingerprint(k PublicKey, alg crypto.Hash) ([]byte, error) {
 	)
 	switch k.GetType() {
 	case KEY_RSA:
-		_, c, err = marshalOpenSSHRSAPublicKey(k)
+		_, c, err = marshalRSAPublicKey(k)
 	case KEY_DSA:
-		_, c, err = marshalOpenSSHDSAPublicKey(k)
+		_, c, err = marshalDSAPublicKey(k)
 	case KEY_ECDSA:
-		_, c, err = marshalOpenSSHECDSAPublicKey(k)
+		_, c, err = marshalECDSAPublicKey(k)
 	default:
 		return nil, ErrUnsupportedKey
 	}

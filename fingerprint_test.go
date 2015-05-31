@@ -30,7 +30,7 @@ func TestPrettyFingerprint(t *testing.T) {
 		if err != nil {
 			panic(err)
 		}
-		pub, err := UnmarshalOpenSSHPublicKey(string(key))
+		pub, err := UnmarshalPublicKey(string(key))
 		if err != nil {
 			t.Error(err)
 			continue
